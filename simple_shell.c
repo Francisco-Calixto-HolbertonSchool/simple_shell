@@ -1,15 +1,24 @@
 #include "holberton.h"
+/**
+ * main - Entry point
+ * description: main
+ * Return: 0
+ */
 
 int main(void)
 {
 	pid_t child;
 	int status, err = 0, n;
-	size_t len = 0;
+	size_t len = 0, f = 1;
 	ssize_t eof;
 	char **argv;
 	char *line = NULL;
 
-	while(1 == 1)
+	if (!isatty(0))
+	{
+		f = 0;
+	}
+	while (1 == 1)
 	{
 		write(1, "($) ", 4);
 		eof = getline(&line, &len, stdin);
@@ -33,15 +42,15 @@ int main(void)
 				write(1, argv[0], n);
 				write(1, ": command not found\n", 20);
 			}
-				
 		}
 		else
 		{
 			wait(&status);
 		}
 		fflush(stdin);
-                line = NULL;
-
+		line = NULL;
+		if (f == 0)
+			break;
 	}
 	return (0);
 }
