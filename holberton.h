@@ -9,5 +9,6 @@
 #include <stdlib.h>
 
 /*protoypes*/
+char **parser(char *str);
 
 #endif
