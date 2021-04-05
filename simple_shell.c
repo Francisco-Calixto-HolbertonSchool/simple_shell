@@ -22,6 +22,25 @@ void error_msg(int err, char *name)
 }
 
 /**
+ * exit_hsh - Entry point
+ * @eof: eof
+ * @argv0: command
+ * description: handles different cases where user want to exit shell
+ * Return: 0
+ */
+
+void exit_hsh(ssize_t eof, char *argv0)
+{
+	if (eof == EOF)
+	{
+		_putchar('\n');
+		exit(0);
+	}
+	if (_strcmp(argv0, "exit") == 0)
+		exit(0);
+}
+
+/**
  * main - Entry point
  * description: main
  * Return: 0
@@ -37,21 +56,14 @@ int main(void)
 	char *line = NULL;
 
 	if (!isatty(0))
-	{
 		f = 0;
-	}
 	while (1 == 1)
 	{
-		write(1, "($) ", 4);
+		if (isatty(0))
+			write(1, "($) ", 4);
 		eof = getline(&line, &len, stdin);
 		argv = parser(line);
-		if (eof == EOF)
-                {
-                        _putchar('\n');
-                        break;
-                }
-		if (_strcmp(argv[0], "exit") == 0)
-			break;
+		exit_hsh(eof, argv[0]);
 		child = fork();
 		if (child == -1)
 			return (1);
@@ -62,9 +74,7 @@ int main(void)
 			break;
 		}
 		else
-		{
 			wait(&status);
-		}
 		fflush(stdin);
 		line = NULL;
 		if (f == 0)
