@@ -1,4 +1,26 @@
 #include "holberton.h"
+
+/**
+ * error_msg - Entry point
+ * @err: execve return value
+ * @name: argv[0]
+ * description: prints error message
+ * Return: nothing
+ */
+
+void error_msg(int err, char *name)
+{
+	int n;
+
+	if (err == -1)
+	{
+		n = _strlen(name);
+		write(1, "error: ", 7);
+		write(1, name, n);
+		write(1, ": command not found\n", 20);
+	}
+}
+
 /**
  * main - Entry point
  * description: main
@@ -7,8 +29,8 @@
 
 int main(void)
 {
-	pid_t child;
-	int status, err = 0, n;
+	pid_t child = 5;
+	int status, err = 0;
 	size_t len = 0, f = 1;
 	ssize_t eof;
 	char **argv;
@@ -23,25 +45,21 @@ int main(void)
 		write(1, "($) ", 4);
 		eof = getline(&line, &len, stdin);
 		argv = parser(line);
-		if ((eof == EOF) || (_strcmp(argv[0], "exit") == 0))
-		{
-			if (eof == EOF)
-				_putchar('\n');
+		if (eof == EOF)
+                {
+                        _putchar('\n');
+                        break;
+                }
+		if (_strcmp(argv[0], "exit") == 0)
 			break;
-		}
 		child = fork();
 		if (child == -1)
 			return (1);
 		if (child == 0)
 		{
 			err = execve(argv[0], argv, NULL);
-			if (err == -1)
-			{
-				n = _strlen(argv[0]);
-				write(1, "error: ", 7);
-				write(1, argv[0], n);
-				write(1, ": command not found\n", 20);
-			}
+			error_msg(err, argv[0]);
+			break;
 		}
 		else
 		{
