@@ -10,5 +10,8 @@
 
 /*protoypes*/
 char **parser(char *str);
+int _strcmp(char *s1, char *s2);
+int _strlen(char *s);
+int _putchar(char c);
 
 #endif

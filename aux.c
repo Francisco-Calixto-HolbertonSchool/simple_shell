@@ -6,7 +6,7 @@ char **parser(char *str)
         char **res;
         char *word;
 
-        len = strlen(str);
+        len = _strlen(str);
         res = malloc(sizeof(char) * len);
         word = strtok(str, " \n");
         while (word)
