@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 /*protoypes*/
 char **parser(char *str);
@@ -15,5 +16,10 @@ int _strlen(char *s);
 int _putchar(char c);
 void free_array(char **argv);
 size_t _strcspn(char *s, char par);
+char *_getenv(const char *name);
+char **findpath(void);
+char *_which(char *cmd);
+char *_strcat(char *dest, char *src);
+char *_strcpy(char *dest, char *src);
 
 #endif

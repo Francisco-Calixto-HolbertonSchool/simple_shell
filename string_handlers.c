@@ -53,3 +53,43 @@ int _putchar(char c)
 {
 	return (write(1, &c, 1));
 }
+
+/**
+ * _strcat - entry point
+ * @dest: string to append
+ * @src: string to be appended
+ * Return: concatenaded strings
+ */
+
+char *_strcat(char *dest, char *src)
+{
+	char *p = dest;
+
+	while (*dest)
+		dest++;
+	while (*src)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*src = '\0';
+	return (p);
+}
+
+/**
+ *_strcpy - copy a string
+ * @dest: destination of the copied string
+ * @src: source of the string
+ * Return: copied string
+ */
+
+char *_strcpy(char *dest, char *src)
+{
+	char *p = dest;
+
+	for (; *src != 0; src++, dest++)
+		*dest = *src;
+	*dest = '\0';
+	return (p);
+}

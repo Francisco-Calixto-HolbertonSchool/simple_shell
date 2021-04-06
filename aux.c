@@ -40,3 +40,48 @@ char **parser(char *str)
 	res[j] = NULL;
 	return (res);
 }
+
+char **findpath(void)
+{
+	int j = 0, size = 0;
+	char *path;
+	char **res;
+	char *word;
+
+	path = _getenv("PATH");
+	size = count_dirs(path);
+	res = malloc(sizeof(char *) * (size));
+	if (!res)
+	{
+		return (NULL);
+	}
+	word = strtok(path, ":="); 
+        while (word)
+        {
+                res[j] = word;
+		word = strtok(NULL, ":=");
+		j++;
+	}
+	res[j] = NULL;
+	return (res);
+}
+
+char *_getenv(const char *name)
+{
+	int i = 0, j = 0;
+	extern char **environ;
+	char *word;
+
+	for (i = 0; environ[i] != '\0'; i++)
+	{
+		word = environ[i];
+		for (j = 0; name[j] != '\0'; j++)
+		{
+			if (name[j] != word[j])
+				break;
+		}
+		if ((name[j] == '\0') && (word[j] == '='))
+			return (word);
+	}
+	return NULL;
+}

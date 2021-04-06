@@ -1,26 +1,5 @@
 #include "holberton.h"
 
-/*
- * error_msg - Entry point
- * @err: execve return value
- * @name: argv[0]
- * description: prints error message
- * Return: nothing
-
-void error_msg(int err, char *name)
-{
-	int n = 0;
-
-	if (err == -1)
-	{
-		n = _strlen(name);
-		write(STDOUT_FILENO, "error: ", 7);
-		write(STDOUT_FILENO, name, n);
-		write(STDOUT_FILENO, ": command not found\n", 20);
-	}
-}
-*/
-
 /**
  * exit_hsh - Entry point
  * @eof: eof
@@ -79,8 +58,10 @@ int main(void)
 			free(argv);
 			return (1);
 		}
+		printf("flag %s", argv[0]);
 		if (child == 0)
 		{
+			argv[0] = _which(argv[0]);
 			if (execve(argv[0], argv, NULL) == -1)
 				perror("./hsh");
 			break;
