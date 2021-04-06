@@ -8,7 +8,7 @@
 
 int _strlen(char *s)
 {
-	int len;
+	int len = 0;
 
 	if (s == NULL)
 		return (0);
@@ -27,8 +27,8 @@ int _strlen(char *s)
 
 int _strcmp(char *s1, char *s2)
 {
-	int a;
-	int b;
+	int a = 0;
+	int b = 0;
 
 	while (*s1 == *s2)
 	{
