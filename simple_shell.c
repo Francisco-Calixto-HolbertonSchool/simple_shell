@@ -58,11 +58,9 @@ int main(void)
 			free(argv);
 			return (1);
 		}
-		printf("flag %s", argv[0]);
 		if (child == 0)
 		{
-			argv[0] = _which(argv[0]);
-			if (execve(argv[0], argv, NULL) == -1)
+			if (execve(_which(argv[0]), argv, NULL) == -1)
 				perror("./hsh");
 			break;
 		}
