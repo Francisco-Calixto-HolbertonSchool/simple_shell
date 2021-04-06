@@ -10,9 +10,9 @@ char *_which(char *cmd)
 	path = findpath();
 	for (i = 1; path[i]; i++)
 	{
-		strcpy(buff, path[i]);
-		strcat(buff, "/");
-		strcat(buff, cmd);
+		_strcpy(buff, path[i]);
+		_strcat(buff, "/");
+		_strcat(buff, cmd);
 		printf("path: %s", buff);
 		if (stat(buff, &st) == 0)
 		{

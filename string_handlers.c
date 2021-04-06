@@ -63,18 +63,17 @@ int _putchar(char c)
 
 char *_strcat(char *dest, char *src)
 {
-	char *p = dest;
+	char *start = NULL;
 
-	while (*dest)
-		dest++;
-	while (*src)
-	{
-		*dest = *src;
-		dest++;
-		src++;
-	}
-	*src = '\0';
-	return (p);
+	if((dest == NULL) && (src == NULL))
+		return NULL;
+	start = dest;
+	while(*start != '\0')
+		start++;
+	while(*src != '\0')
+		*start++ = *src++;
+	*start = '\0';
+	return dest;
 }
 
 /**
@@ -86,10 +85,12 @@ char *_strcat(char *dest, char *src)
 
 char *_strcpy(char *dest, char *src)
 {
-	char *p = dest;
+	int i = 0, len = 0;
 
-	for (; *src != 0; src++, dest++)
-		*dest = *src;
-	*dest = '\0';
-	return (p);
+	len = _strlen(src);
+	for (i = 0 ; i <= len ; i++)
+	{
+		dest[i] = src[i];
+	}
+	return (dest);
 }
