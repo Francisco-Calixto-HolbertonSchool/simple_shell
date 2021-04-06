@@ -13,7 +13,6 @@ char *_which(char *cmd)
 		_strcpy(buff, path[i]);
 		_strcat(buff, "/");
 		_strcat(buff, cmd);
-		printf("path: %s", buff);
 		if (stat(buff, &st) == 0)
 		{
 			free(path);
@@ -21,5 +20,5 @@ char *_which(char *cmd)
 		}
 	}
 	free(path);
-	return (NULL);
+	return (cmd);
 }
