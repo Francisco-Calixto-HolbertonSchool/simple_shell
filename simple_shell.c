@@ -1,12 +1,11 @@
 #include "holberton.h"
 
-/**
+/*
  * error_msg - Entry point
  * @err: execve return value
  * @name: argv[0]
  * description: prints error message
  * Return: nothing
- */
 
 void error_msg(int err, char *name)
 {
@@ -20,6 +19,7 @@ void error_msg(int err, char *name)
 		write(STDOUT_FILENO, ": command not found\n", 20);
 	}
 }
+*/
 
 /**
  * exit_hsh - Entry point
@@ -50,7 +50,7 @@ size_t exit_hsh(ssize_t eof, char *argv0)
 int main(void)
 {
 	pid_t child = 100; /* Para darnos cuenta si falla */
-	int status = 0, err = 0;
+	int status = 0;
 	size_t len = 0, f = 1, b = 1;
 	ssize_t eof = 0;
 	char **argv = NULL;
@@ -68,30 +68,30 @@ int main(void)
 		if (b == 0)
 		{
 			fflush(STDIN_FILENO);
-			line = NULL;
 			break;
 		}
 		child = fork();
 		if (child == -1)
 		{
 			free(line);
-			free_array(argv);
+			line = NULL;
+			free(argv);
 			return (1);
 		}
 		if (child == 0)
 		{
-			err = execve(argv[0], argv, NULL);
-			error_msg(err, argv[0]);
+			if (execve(argv[0], argv, NULL) == -1)
+				perror("./hsh");
 			break;
 		}
 		else
 			wait(&status);
 		fflush(STDIN_FILENO);
-		line = NULL;
 		if (f == 0)
 			break;
 	}
 	free(line);
-	free_array(argv);
+	line = NULL;
+	free(argv);
 	return (0);
 }
