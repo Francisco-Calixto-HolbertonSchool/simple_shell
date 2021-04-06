@@ -63,6 +63,7 @@ int main(void)
 		if (isatty(STDIN_FILENO))
 			write(1, "($) ", 4);
 		eof = getline(&line, &len, stdin);
+		free(argv);
 		argv = parser(line);
 		b = exit_hsh(eof, argv[0]);
 		if (b == 0)

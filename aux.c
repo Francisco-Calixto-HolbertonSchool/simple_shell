@@ -40,13 +40,3 @@ char **parser(char *str)
 	res[j] = NULL;
 	return (res);
 }
-/*
-void free_array(char **argv)
-{
-	int i = 0;
-
-	for (i = 0; argv[i]; i++)
-		free(argv[i]);
-	free(argv);
-}
-*/
