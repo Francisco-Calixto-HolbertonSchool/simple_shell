@@ -22,8 +22,8 @@ int exit_hsh(ssize_t eof, char *argv0)
 
 /**
  * free_everything - Entry point
- * @eof: eof
- * @argv0: command
+ * @line: eof
+ * @argv: command
  * description: sets some variables to null and frees allocs
  * Return: void
  */
