@@ -8,13 +8,14 @@
  * Return: 0
  */
 
-int exit_hsh(ssize_t eof, char **argv)
+int exit_hsh(ssize_t eof, char **argv, int flag)
 {
 	int i = 0;
 
 	if (eof == EOF)
 	{
-		_putchar('\n');
+		if(flag == 1)
+			_putchar('\n');
 		return (0);
 	}
 	if (argv[0])
@@ -46,6 +47,24 @@ void free_everything(char *line, char **argv)
 	free(argv);
 }
 
+
+/**
+ * interactive - Entry point
+ * @f: command
+ * description: returns according to interactive mode
+ * Return: void
+ */
+
+int interactive(int f)
+{
+	if (!isatty(STDIN_FILENO))
+		f = 0;
+	if (isatty(STDIN_FILENO))
+		write (1, "($)", 4);
+	return (f);
+}
+
+
 /**
  * main - Entry point
  * description: main
@@ -61,16 +80,13 @@ int main(void)
 	char **argv = NULL;
 	char *line = NULL;
 
-	if (!isatty(STDIN_FILENO))
-		f = 0;
 	while (1 == 1)
 	{
-		if (isatty(STDIN_FILENO))
-			write(1, "($) ", 4);
+		f = interactive(f);
 		eof = getline(&line, &len, stdin);
 		free(argv);
 		argv = parser(line);
-		if ((exit_hsh(eof, argv)) == 0)
+		if ((exit_hsh(eof, argv, f)) == 0)
 		{
 			fflush(STDIN_FILENO);
 			break;
@@ -91,8 +107,6 @@ int main(void)
 		else
 			wait(&status);
 		fflush(STDIN_FILENO);
-		if (f == 0)
-			break;
 	}
 	free_everything(line, argv);
 	return (0);
