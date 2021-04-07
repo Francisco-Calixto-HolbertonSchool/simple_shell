@@ -8,7 +8,7 @@
  * Return: 0
  */
 
-int exit_hsh(ssize_t eof, char *argv0)
+int exit_hsh(ssize_t eof, char **argv)
 {
 	int i = 0;
 
@@ -17,15 +17,15 @@ int exit_hsh(ssize_t eof, char *argv0)
 		_putchar('\n');
 		return (0);
 	}
-	if (argv0)
+	if (argv[0])
 	{
-		if (_strcmp(argv0, "exit") == 0)
+		if (_strcmp(argv[0], "exit") == 0)
 			return (0);
 
-		if (_strcmp(argv0, "env") == 0)
+		if ((_strcmp(argv[0], "env") == 0) && argv[1] == NULL)
 		{
 			for (i = 0; environ[i] != '\0' ; i++)
-				printf("%s\n", environ[i]);
+				_puts(environ[i]);
 		}
 	}
 	return (1);
@@ -70,7 +70,7 @@ int main(void)
 		eof = getline(&line, &len, stdin);
 		free(argv);
 		argv = parser(line);
-		if ((exit_hsh(eof, argv[0])) == 0)
+		if ((exit_hsh(eof, argv)) == 0)
 		{
 			fflush(STDIN_FILENO);
 			break;
@@ -83,8 +83,9 @@ int main(void)
 		}
 		if (child == 0)
 		{
-			if (execve(_which(argv[0]), argv, NULL) == -1)
-				perror("./hsh");
+			if(argv[0])
+				if (execve(_which(argv[0]), argv, NULL) == -1)
+					perror("./hsh");
 			break;
 		}
 		else

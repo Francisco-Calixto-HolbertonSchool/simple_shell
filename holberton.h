@@ -23,5 +23,6 @@ char **findpath(void);
 char *_which(char *cmd);
 char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
+void _puts(char *str);
 
 #endif
