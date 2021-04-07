@@ -10,14 +10,24 @@
 
 int exit_hsh(ssize_t eof, char *argv0)
 {
+	int i = 0;
+
 	if (eof == EOF)
 	{
 		_putchar('\n');
 		return (0);
 	}
 	if (argv0)
+	{
 		if (_strcmp(argv0, "exit") == 0)
 			return (0);
+
+		if (_strcmp(argv0, "env") == 0)
+		{
+			for (i = 0; environ[i] != '\0' ; i++)
+				printf("%s\n", environ[i]);
+		}
+	}
 	return (1);
 }
 
