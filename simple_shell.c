@@ -15,8 +15,9 @@ int exit_hsh(ssize_t eof, char *argv0)
 		_putchar('\n');
 		return (0);
 	}
-	if (_strcmp(argv0, "exit") == 0)
-		return (0);
+	if (argv0)
+		if (_strcmp(argv0, "exit") == 0)
+			return (0);
 	return (1);
 }
 
