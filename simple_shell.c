@@ -8,7 +8,7 @@
  * Return: 0
  */
 
-size_t exit_hsh(ssize_t eof, char *argv0)
+int exit_hsh(ssize_t eof, char *argv0)
 {
 	if (eof == EOF)
 	{
@@ -21,6 +21,21 @@ size_t exit_hsh(ssize_t eof, char *argv0)
 }
 
 /**
+ * free_everything - Entry point
+ * @eof: eof
+ * @argv0: command
+ * description: sets some variables to null and frees allocs
+ * Return: void
+ */
+
+void free_everything(char *line, char **argv)
+{
+	free(line);
+	line = NULL;
+	free(argv);
+}
+
+/**
  * main - Entry point
  * description: main
  * Return: 0
@@ -30,7 +45,7 @@ int main(void)
 {
 	pid_t child = 100; /* Para darnos cuenta si falla */
 	int status = 0;
-	size_t len = 0, f = 1, b = 1;
+	size_t len = 0, f = 1;
 	ssize_t eof = 0;
 	char **argv = NULL;
 	char *line = NULL;
@@ -44,8 +59,7 @@ int main(void)
 		eof = getline(&line, &len, stdin);
 		free(argv);
 		argv = parser(line);
-		b = exit_hsh(eof, argv[0]);
-		if (b == 0)
+		if ((exit_hsh(eof, argv[0])) == 0)
 		{
 			fflush(STDIN_FILENO);
 			break;
@@ -53,9 +67,7 @@ int main(void)
 		child = fork();
 		if (child == -1)
 		{
-			free(line);
-			line = NULL;
-			free(argv);
+			free_everything(line, argv);
 			return (1);
 		}
 		if (child == 0)
@@ -70,8 +82,6 @@ int main(void)
 		if (f == 0)
 			break;
 	}
-	free(line);
-	line = NULL;
-	free(argv);
+	free_everything(line, argv);
 	return (0);
 }
