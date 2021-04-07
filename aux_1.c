@@ -1,5 +1,12 @@
 #include "holberton.h"
 
+/**
+ * _which - entry point
+ * @cmd: command to find full path
+ * Return: full path on success
+ *
+ */
+
 char *_which(char *cmd)
 {
 	int i = 0;

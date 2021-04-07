@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
+extern char **environ;
+
 /*protoypes*/
 char **parser(char *str);
 int _strcmp(char *s1, char *s2);

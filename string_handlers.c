@@ -65,15 +65,15 @@ char *_strcat(char *dest, char *src)
 {
 	char *start = NULL;
 
-	if((dest == NULL) && (src == NULL))
-		return NULL;
+	if ((dest == NULL) && (src == NULL))
+		return (NULL);
 	start = dest;
-	while(*start != '\0')
+	while (*start != '\0')
 		start++;
-	while(*src != '\0')
+	while (*src != '\0')
 		*start++ = *src++;
 	*start = '\0';
-	return dest;
+	return (dest);
 }
 
 /**
