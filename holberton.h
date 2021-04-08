@@ -26,5 +26,6 @@ char *_strcpy(char *dest, char *src);
 void _puts(char *str);
 char *_strncpy(char *dest, char *src, int n);
 char *special_char_finder(char *str, char *ch);
+void free_everything(char *line, char **argv);
 
 #endif

@@ -8,7 +8,7 @@
  * Return: 0
  */
 
-int exit_hsh(ssize_t eof, char **argv, int flag)
+int exit_hsh(ssize_t eof, char **argv, int flag, char *line)
 {
 	int i = 0;
 
@@ -21,7 +21,16 @@ int exit_hsh(ssize_t eof, char **argv, int flag)
 	if (argv[0])
 	{
 		if (_strcmp(argv[0], "exit") == 0)
-			return (0);
+		{
+			if(argv[1])
+			{
+				i = atoi(argv[1]);
+				free_everything(line, argv);
+				exit(i);
+			}
+			else
+				return (0);
+		}
 
 		if ((_strcmp(argv[0], "env") == 0) && argv[1] == NULL)
 		{
@@ -86,7 +95,7 @@ int main(void)
 		eof = getline(&line, &len, stdin);
 		free(argv);
 		argv = parser(line);
-		if ((exit_hsh(eof, argv, f)) == 0)
+		if ((exit_hsh(eof, argv, f, line)) == 0)
 		{
 			fflush(STDIN_FILENO);
 			break;
