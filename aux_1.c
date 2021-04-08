@@ -33,25 +33,16 @@ char *_which(char *cmd)
 /**
  * special_char_finder - entry point
  * @str: string to search special character
- * @ch: char to search for
+ * @ch: char to search for (its a string)
  * Return: changed string (or not)
- *
  */
-
-char *special_char_finder(char *str, char ch)
+char *special_char_finder(char *str, char *ch)
 {
-	char *aux;
-	unsigned int i = 0, l = 0;
+	char *res = NULL;
 
-	l = _strlen(str);
-	while ((str[i] != ch) && str[i])
-	{
-		i++;
-	}
-	if (i == l)
-		return (str);
-	aux = malloc(sizeof(char) * (i + 1));
-	str = strncpy(aux, str, i);
-	free(aux);
-	return (str);
+	res = strtok(str, ch);
+	if (res)
+		return (res);
+	else
+		return(str);
 }
