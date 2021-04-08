@@ -31,29 +31,27 @@ char *_which(char *cmd)
 }
 
 /**
-* _puts - Entry point
-* @str: Array of char
-*
-* Description: print the content of str
-* Return: Nothing
-*/
-void _puts(char *str)
+ * special_char_finder - entry point
+ * @str: string to search special character
+ * @ch: char to search for
+ * Return: changed string (or not)
+ *
+ */
+
+char *special_char_finder(char *str, char ch)
 {
-	int i = 0;
+	char *aux;
+	unsigned int i = 0, l = 0;
 
-	char flag = 0;
-
-	while (!flag)
+	l = _strlen(str);
+	while ((str[i] != ch) && str[i])
 	{
-		if (str[i] == '\0')
-		{
-			_putchar('\n');
-			flag = 1;
-		}
-		else
-		{
-			_putchar(str[i]);
-			i++;
-		}
+		i++;
 	}
+	if (i == l)
+		return (str);
+	aux = malloc(sizeof(char) * (i + 1));
+	str = strncpy(aux, str, i);
+	free(aux);
+	return (str);
 }

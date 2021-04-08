@@ -60,7 +60,7 @@ int interactive(int f)
 	if (!isatty(STDIN_FILENO))
 		f = 0;
 	if (isatty(STDIN_FILENO))
-		write (1, "($)", 4);
+		write (1, "($) ", 4);
 	return (f);
 }
 
@@ -99,7 +99,7 @@ int main(void)
 		}
 		if (child == 0)
 		{
-			if(argv[0])
+			if (argv[0])
 				if (execve(_which(argv[0]), argv, NULL) == -1)
 					perror("./hsh");
 			break;
