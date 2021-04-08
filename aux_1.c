@@ -17,9 +17,14 @@ char *_which(char *cmd)
 	path = findpath();
 	for (i = 1; path[i]; i++)
 	{
-		_strcpy(buff, path[i]);
-		_strcat(buff, "/");
-		_strcat(buff, cmd);
+		if(cmd[0] == '.')
+			_strcpy(buff, cmd);
+		else
+		{
+			_strcpy(buff, path[i]);
+			_strcat(buff, "/");
+			_strcat(buff, cmd);
+		}
 		if (stat(buff, &st) == 0)
 		{
 			free(path);
@@ -40,6 +45,8 @@ char *special_char_finder(char *str, char *ch)
 {
 	char *res = NULL;
 
+	if (str[0] == '#')
+		return ("");
 	res = strtok(str, ch);
 	if (res)
 		return (res);

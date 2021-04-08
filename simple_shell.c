@@ -92,6 +92,7 @@ int main(void)
 	while (1 == 1)
 	{
 		f = interactive(f);
+		signal(SIGINT, SIG_IGN);
 		eof = getline(&line, &len, stdin);
 		free(argv);
 		argv = parser(line);
