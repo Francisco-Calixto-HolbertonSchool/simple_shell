@@ -24,7 +24,7 @@ int exit_hsh(ssize_t eof, char **argv, int flag, char *line)
 		{
 			if(argv[1])
 			{
-				i = atoi(argv[1]);
+				i = _atoi(argv[1]);
 				free_everything(line, argv);
 				exit(i);
 			}
