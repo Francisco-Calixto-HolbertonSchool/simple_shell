@@ -55,7 +55,11 @@ void free_everything(char *line, char **argv)
 	line = NULL;
 	free(argv);
 }
-
+void sig_handler(int signum)
+{
+	signum = signum;
+	write(1,"\n($) ", 5);
+}
 
 /**
  * interactive - Entry point
@@ -92,7 +96,7 @@ int main(void)
 	while (1 == 1)
 	{
 		f = interactive(f);
-		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, sig_handler);
 		eof = getline(&line, &len, stdin);
 		free(argv);
 		argv = parser(line);
