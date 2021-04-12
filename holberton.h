@@ -11,6 +11,7 @@
 #include <signal.h>
 
 extern char **environ;
+char **my_env;
 
 /*protoypes*/
 char **parser(char *str);
@@ -29,5 +30,9 @@ char *_strncpy(char *dest, char *src, int n);
 char *special_char_finder(char *str, char *ch);
 void free_everything(char *line, char **argv);
 int _atoi(char *s);
+void free_grid(char **grid);
+char **array_copy(char **arr, int extra);
+int _setenv(char *name, char *value, int overwrite);
+
 
 #endif

@@ -109,9 +109,9 @@ char *_getenv(const char *name)
 	int i = 0, j = 0;
 	char *word;
 
-	for (i = 0; environ[i] != '\0'; i++)
+	for (i = 0; my_env[i] != '\0'; i++)
 	{
-		word = environ[i];
+		word = my_env[i];
 		for (j = 0; name[j] != '\0'; j++)
 		{
 			if (name[j] != word[j])

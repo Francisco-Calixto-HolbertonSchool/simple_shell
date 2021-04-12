@@ -34,9 +34,26 @@ int exit_hsh(ssize_t eof, char **argv, int flag, char *line)
 
 		if ((_strcmp(argv[0], "env") == 0) && argv[1] == NULL)
 		{
-			for (i = 0; environ[i] != '\0' ; i++)
-				_puts(environ[i]);
+			for (i = 0; my_env[i] != '\0' ; i++)
+				_puts(my_env[i]);
+			argv[0] = NULL;
+			return (1);
 		}
+		if ((_strcmp(argv[0], "env") == 0) && argv[1] != NULL)
+		{
+			for (i = 1 ; argv[i] != '\0' ; i++)
+				_strcpy(argv[i - 1], argv[i]);
+			argv[i - 1] = NULL;
+			return (1);
+		}
+		/*cd_builtin(argv);*/
+		if ((_strcmp(argv[0], "setenv") == 0) && argv[1] != NULL && argv[2] != NULL)
+		{
+			_setenv(argv[1] , argv[2] , 1);
+			argv[0] = NULL;
+			return (1);
+		}
+
 	}
 	return (1);
 }
@@ -51,6 +68,7 @@ int exit_hsh(ssize_t eof, char **argv, int flag, char *line)
 
 void free_everything(char *line, char **argv)
 {
+	free_grid(my_env);
 	free(line);
 	line = NULL;
 	free(argv);
@@ -93,6 +111,7 @@ int main(void)
 	char **argv = NULL;
 	char *line = NULL;
 
+	my_env = array_copy(environ, 0);
 	while (1 == 1)
 	{
 		f = interactive(f);

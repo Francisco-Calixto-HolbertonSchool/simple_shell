@@ -1,6 +1,27 @@
 #include "holberton.h"
 
 /**
+* free_grid - Entry point
+* @grid: matrix
+* @height: int
+*
+* Description: Free a matrix
+* Return: Nothing
+*/
+void free_grid(char **grid)
+{
+        int i = 0, size = 0;
+
+        for (size = 0 ; grid[size] != '\0' ; size++)
+        {
+        }
+        for (i = 0 ; i < size ; i++)
+                free(grid[i]);
+        free(grid);
+}
+
+
+/**
  * _which - entry point
  * @cmd: command to find full path
  * Return: full path on success
@@ -52,4 +73,82 @@ char *special_char_finder(char *str, char *ch)
 		return (res);
 	else
 		return(str);
+}
+
+char **array_copy(char **arr, int extra)
+{
+        int i = 0, len = 0;
+        char **new_arr;
+
+        for (i = 0 ; arr[i] != '\0' ; i++)
+        {
+        }
+        new_arr = malloc(sizeof(char *) * (i + extra + 1));
+        for (i = 0 ; arr[i] != '\0' ; i++)
+        {
+                len = _strlen(arr[i]);
+                new_arr[i] = malloc(sizeof(char) * (len + 1));
+                _strcpy(new_arr[i], arr[i]);
+                new_arr[i][len] = '\0';
+        }
+        new_arr[i] = NULL;
+        return (new_arr);
+}
+
+int _setenv(char *name, char *value, int overwrite)
+{
+	int i = 0, j = 0, size = 0;
+	char *new_val;
+	char **new_env;
+
+	for (i = 0; my_env[i] != '\0'; i++)
+	{
+			char *word = my_env[i];
+			for (j = 0; name[j] != '\0'; j++)
+			{
+				if (name[j] != word[j])
+					break;
+			}
+			if ((name[j] == '\0') && (word[j] == '='))
+			{
+				if(overwrite != 0)
+				{
+					size = (_strlen(name) + 2 + _strlen(value));
+					new_val = malloc(sizeof(char) * size);
+					if(!new_val)
+						return (-1);
+					_strcpy(new_val, name);
+					_strcat(new_val, "=");
+					_strcat(new_val, value);
+					_strcat(new_val , "\0");
+					free(my_env[i]);
+					my_env[i] = malloc(sizeof(char) * size);
+					_strcpy(my_env[i], new_val);
+					free(new_val);
+					return 0;
+				}
+				else
+					return (0);
+			}
+	}
+	if (my_env[i] == '\0')
+	{
+		size = (_strlen(name) + 2 + _strlen(value));
+                new_val = malloc(sizeof(char) * size);
+                if(!new_val)
+			return (-1);
+		new_env = array_copy(my_env, 1);
+		new_env[i] = malloc(sizeof(char) * size);
+		_strcpy(new_val, name);
+		_strcat(new_val, "=");
+		_strcat(new_val, value);
+		_strcat(new_val, "\0");
+		_strcpy(new_env[i] , new_val);
+		new_env[i + 1] = NULL;
+		free_grid(my_env);
+		my_env = array_copy(new_env, 0);
+		free_grid(new_env);
+		free(new_val);
+	}
+	return 0;
 }
