@@ -11,7 +11,6 @@
 #include <signal.h>
 
 extern char **environ;
-char **my_env;
 
 /*protoypes*/
 char **parser(char *str);
@@ -20,21 +19,21 @@ int _strlen(char *s);
 int _putchar(char c);
 void free_array(char **argv);
 size_t _strcspn(char *s, char par);
-char *_getenv(const char *name);
-char **findpath(void);
-char *_which(char *cmd);
+char *_getenv(const char *name, char **env);
+char **findpath(char **env);
+char *_which(char *cmd, char **env);
 char *_strcat(char *dest, char *src);
 char *_strcpy(char *dest, char *src);
 void _puts(char *str);
 char *_strncpy(char *dest, char *src, int n);
 char *special_char_finder(char *str, char *ch);
-void free_everything(char *line, char **argv);
+void free_everything(char *line, char **argv, char **env);
 int _atoi(char *s);
 void free_grid(char **grid);
 char **array_copy(char **arr, int extra);
-int _setenv(char *name, char *value, int overwrite);
-void env_builtin(char **argv);
-int replace_env_val(char *name, char *value, int pos);
-int add_env_val(char *name, char *value, int pos);
+int _setenv(char *name, char *value, int overwrite, char **env, char ***envi);
+void env_builtin(char **argv, char **env);
+int replace_env_val(char *name, char *value, int pos, char **env);
+int add_env_val(char *name, char *value, int pos, char **env, char ***envi);
 
 #endif

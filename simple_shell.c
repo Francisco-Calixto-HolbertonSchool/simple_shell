@@ -3,29 +3,36 @@
 /**
  * exit_hsh - Entry point
  * @eof: eof
- * @argv0: command
+ * @argv: command
+ * @f: flag
+ * @line: line
+ * @env: enviroment array
+ * @envi: pointer to enviromnet array
  * description: handles different cases where user want to exit shell
  * Return: 0
  */
 
-int exit_hsh(ssize_t eof, char **argv, int flag, char *line)
+int exit_hsh(ssize_t eof, char **argv, int f, char *line, char **env, char ***envi)
 {
 	int i = 0;
 
 	if (eof == EOF)
 	{
-		if(flag == 1)
+		if (f == 1)
+		{
 			_putchar('\n');
+			argv[0] = NULL;
+		}
 		return (0);
 	}
 	if (argv[0])
 	{
 		if (_strcmp(argv[0], "exit") == 0)
 		{
-			if(argv[1])
+			if (argv[1])
 			{
 				i = _atoi(argv[1]);
-				free_everything(line, argv);
+				free_everything(line, argv, env);
 				exit(i);
 			}
 			else
@@ -33,22 +40,12 @@ int exit_hsh(ssize_t eof, char **argv, int flag, char *line)
 		}
 		if (_strcmp(argv[0], "env") == 0)
 		{
-			/*for (i = 0; my_env[i] != '\0' ; i++)
-				_puts(my_env[i]);
-			argv[0] = NULL;*/
-			env_builtin(argv);
+			env_builtin(argv, env);
 			return (1);
 		}
-		/*if ((_strcmp(argv[0], "env") == 0) && argv[1] != NULL)
-		{
-			for (i = 1 ; argv[i] != '\0' ; i++)
-				_strcpy(argv[i - 1], argv[i]);
-			argv[i - 1] = NULL;
-			return (1);
-		}*/
 		if ((_strcmp(argv[0], "setenv") == 0) && argv[1] != NULL && argv[2] != NULL)
 		{
-			_setenv(argv[1] , argv[2] , 1);
+			_setenv(argv[1], argv[2], 1, env, envi);
 			argv[0] = NULL;
 			return (1);
 		}
@@ -60,21 +57,30 @@ int exit_hsh(ssize_t eof, char **argv, int flag, char *line)
  * free_everything - Entry point
  * @line: eof
  * @argv: command
+ * @env: enviroment array
  * description: sets some variables to null and frees allocs
  * Return: void
  */
 
-void free_everything(char *line, char **argv)
+void free_everything(char *line, char **argv, char **env)
 {
-	free_grid(my_env);
+	free_grid(env);
 	free(line);
 	line = NULL;
 	free(argv);
 }
+
+/**
+* sig_handler - Entry point
+* @signum: signum
+*
+* Description: Hanndle the Ctrl+C signal
+* Return: Nothing
+*/
 void sig_handler(int signum)
 {
 	signum = signum;
-	write(1,"\n($) ", 5);
+	write(1, "\n($) ", 5);
 }
 
 /**
@@ -89,7 +95,7 @@ int interactive(int f)
 	if (!isatty(STDIN_FILENO))
 		f = 0;
 	if (isatty(STDIN_FILENO))
-		write (1, "($) ", 4);
+		write(1, "($) ", 4);
 	return (f);
 }
 
@@ -108,8 +114,9 @@ int main(void)
 	ssize_t eof = 0;
 	char **argv = NULL;
 	char *line = NULL;
+	char **my_envi;
 
-	my_env = array_copy(environ, 0);
+	my_envi = array_copy(environ, 0);
 	while (1 == 1)
 	{
 		f = interactive(f);
@@ -117,7 +124,7 @@ int main(void)
 		eof = getline(&line, &len, stdin);
 		free(argv);
 		argv = parser(line);
-		if ((exit_hsh(eof, argv, f, line)) == 0)
+		if ((exit_hsh(eof, argv, f, line, my_envi, &my_envi)) == 0)
 		{
 			fflush(STDIN_FILENO);
 			break;
@@ -125,13 +132,13 @@ int main(void)
 		child = fork();
 		if (child == -1)
 		{
-			free_everything(line, argv);
+			free_everything(line, argv, my_envi);
 			return (1);
 		}
 		if (child == 0)
 		{
 			if (argv[0])
-				if (execve(_which(argv[0]), argv, NULL) == -1)
+				if (execve(_which(argv[0], my_envi), argv, NULL) == -1)
 					perror("./hsh");
 			break;
 		}
@@ -139,6 +146,6 @@ int main(void)
 			wait(&status);
 		fflush(STDIN_FILENO);
 	}
-	free_everything(line, argv);
+	free_everything(line, argv, my_envi);
 	return (0);
 }

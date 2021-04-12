@@ -23,18 +23,19 @@ void free_grid(char **grid)
 /**
  * _which - entry point
  * @cmd: command to find full path
+ * @env: enviroment array
  * Return: full path on success
  *
  */
 
-char *_which(char *cmd)
+char *_which(char *cmd, char **env)
 {
 	int i = 0;
 	struct stat st;
 	static char buff[1024];
 	char **path = NULL;
 
-	path = findpath();
+	path = findpath(env);
 	for (i = 1; path[i]; i++)
 	{
 		if (cmd[0] == '.')
@@ -107,18 +108,20 @@ char **array_copy(char **arr, int extra)
 * @name: name for variable
 * @value: value for variable
 * @overwrite: is ow or not
+* @env: enviroment array
+* @envi: pointer to enviromnet array
 *
 * Description: Add or replace a enviroment variable
 * Return: 0 Success
 */
-int _setenv(char *name, char *value, int overwrite)
+int _setenv(char *name, char *value, int overwrite, char **env, char ***envi)
 {
 	int i = 0, j = 0;
 	char *word;
 
-	for (i = 0; my_env[i] != '\0'; i++)
+	for (i = 0; env[i] != '\0'; i++)
 	{
-		word = my_env[i];
+		word = env[i];
 		for (j = 0; name[j] != '\0'; j++)
 		{
 			if (name[j] != word[j])
@@ -128,15 +131,15 @@ int _setenv(char *name, char *value, int overwrite)
 		{
 			if (overwrite != 0)
 			{
-				return (replace_env_val(name, value, i));
+				return (replace_env_val(name, value, i, env));
 			}
 			else
 				return (0);
 		}
 	}
-	if (my_env[i] == '\0')
+	if (env[i] == '\0')
 	{
-		add_env_val(name, value, i);
+		add_env_val(name, value, i, env, envi);
 	}
 	return (0);
 }

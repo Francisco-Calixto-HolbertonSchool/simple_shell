@@ -40,8 +40,8 @@ char *_strncpy(char *dest, char *src, int n)
 {
 	char *start = NULL;
 
-	if ((dest == NULL) &&(src == NULL))
-		return NULL;
+	if ((dest == NULL) && (src == NULL))
+		return (NULL);
 	start = dest;
 	while (*src && n--)
 	{
@@ -50,7 +50,7 @@ char *_strncpy(char *dest, char *src, int n)
 		src++;
 	}
 	*dest = '\0';
-	return start;
+	return (start);
 }
 
 /**
