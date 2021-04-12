@@ -1,10 +1,8 @@
 #include "holberton.h"
 
 /**
- * exit_hsh - Entry point
- * @eof: eof
+ * built_ins - Entry point
  * @argv: command
- * @f: flag
  * @line: line
  * @env: enviroment array
  * @envi: pointer to enviromnet array
@@ -12,28 +10,19 @@
  * Return: 0
  */
 
-int exit_hsh(ssize_t eof, char **argv, int f, char *line, char **env, char ***envi)
+int built_ins(char **argv, char *line, char **env, char ***envi)
 {
-	int i = 0;
+	int exit_status = 0;
 
-	if (eof == EOF)
-	{
-		if (f == 1)
-		{
-			_putchar('\n');
-			argv[0] = NULL;
-		}
-		return (0);
-	}
 	if (argv[0])
 	{
 		if (_strcmp(argv[0], "exit") == 0)
 		{
 			if (argv[1])
 			{
-				i = _atoi(argv[1]);
+				exit_status = _atoi(argv[1]);
 				free_everything(line, argv, env);
-				exit(i);
+				exit(exit_status);
 			}
 			else
 				return (0);
@@ -90,7 +79,7 @@ void sig_handler(int signum)
  * Return: void
  */
 
-int interactive(int f)
+int interactive(size_t f)
 {
 	if (!isatty(STDIN_FILENO))
 		f = 0;
@@ -108,23 +97,24 @@ int interactive(int f)
 
 int main(void)
 {
-	pid_t child = 100; /* Para darnos cuenta si falla */
-	int status = 0;
+	pid_t child = 100;
+	int eof = 0, status = 0;
 	size_t len = 0, f = 1;
-	ssize_t eof = 0;
 	char **argv = NULL;
 	char *line = NULL;
 	char **my_envi;
 
 	my_envi = array_copy(environ, 0);
-	while (1 == 1)
+	while (f == 1)
 	{
 		f = interactive(f);
 		signal(SIGINT, sig_handler);
 		eof = getline(&line, &len, stdin);
+		if (ctrl_d(eof) == 0)
+			break;
 		free(argv);
 		argv = parser(line);
-		if ((exit_hsh(eof, argv, f, line, my_envi, &my_envi)) == 0)
+		if ((built_ins(argv, line, my_envi, &my_envi)) == 0)
 		{
 			fflush(STDIN_FILENO);
 			break;

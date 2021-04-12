@@ -13,6 +13,7 @@
 extern char **environ;
 
 /*protoypes*/
+int ctrl_d(int eof);
 char **parser(char *str);
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);

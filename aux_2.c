@@ -88,3 +88,19 @@ int add_env_val(char *name, char *value, int pos, char **env, char ***envi)
 	free(new_val);
 	return (0);
 }
+
+/**
+ * ctrl_d - entry point
+ * @eof: end of file
+ * Return: -1 if ctrl d was pressed 1 if not
+ */
+int ctrl_d(int eof)
+{
+	if (eof == EOF)
+	{
+		_putchar('\n');
+		fflush(STDIN_FILENO);
+		return (0);
+	}
+	return (1);
+}
