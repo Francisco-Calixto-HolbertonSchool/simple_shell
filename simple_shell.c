@@ -100,9 +100,8 @@ int main(void)
 	pid_t child = 100;
 	int eof = 0, status = 0;
 	size_t len = 0, f = 1;
-	char **argv = NULL;
+	char **argv = NULL, **my_envi;
 	char *line = NULL;
-	char **my_envi;
 
 	my_envi = array_copy(environ, 0);
 	while (f == 1)
