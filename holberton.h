@@ -35,6 +35,6 @@ char **array_copy(char **arr, int extra);
 int _setenv(char *name, char *value, int overwrite);
 void env_builtin(char **argv);
 int replace_env_val(char *name, char *value, int pos);
-
+int add_env_val(char *name, char *value, int pos);
 
 #endif

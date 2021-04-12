@@ -36,3 +36,28 @@ int replace_env_val(char *name, char *value, int pos)
                                         free(new_val);
 	return (0);
 }
+
+int add_env_val(char *name, char *value, int pos)
+{
+	int size = 0;
+	char *new_val;
+	char **new_env;
+
+	size = (_strlen(name) + 2 + _strlen(value));
+                new_val = malloc(sizeof(char) * size);
+                if(!new_val)
+                        return (-1);
+                new_env = array_copy(my_env, 1);
+                new_env[pos] = malloc(sizeof(char) * size);
+                _strcpy(new_val, name);
+                _strcat(new_val, "=");
+                _strcat(new_val, value);
+                _strcat(new_val, "\0");
+                _strcpy(new_env[pos] , new_val);
+                new_env[pos + 1] = NULL;
+                free_grid(my_env);
+                my_env = array_copy(new_env, 0);
+                free_grid(new_env);
+                free(new_val);
+	return (0);
+}
