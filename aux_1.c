@@ -113,7 +113,7 @@ int _setenv(char *name, char *value, int overwrite)
 			{
 				if(overwrite != 0)
 				{
-					size = (_strlen(name) + 2 + _strlen(value));
+					/*size = (_strlen(name) + 2 + _strlen(value));
 					new_val = malloc(sizeof(char) * size);
 					if(!new_val)
 						return (-1);
@@ -124,8 +124,8 @@ int _setenv(char *name, char *value, int overwrite)
 					free(my_env[i]);
 					my_env[i] = malloc(sizeof(char) * size);
 					_strcpy(my_env[i], new_val);
-					free(new_val);
-					return 0;
+					free(new_val);*/
+					return (replace_env_val(name,value,i));
 				}
 				else
 					return (0);
@@ -148,7 +148,7 @@ int _setenv(char *name, char *value, int overwrite)
 		free_grid(my_env);
 		my_env = array_copy(new_env, 0);
 		free_grid(new_env);
-		free(new_val);
 	}
+	free(new_val);
 	return 0;
 }

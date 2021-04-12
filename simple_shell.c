@@ -31,29 +31,27 @@ int exit_hsh(ssize_t eof, char **argv, int flag, char *line)
 			else
 				return (0);
 		}
-
-		if ((_strcmp(argv[0], "env") == 0) && argv[1] == NULL)
+		if (_strcmp(argv[0], "env") == 0)
 		{
-			for (i = 0; my_env[i] != '\0' ; i++)
+			/*for (i = 0; my_env[i] != '\0' ; i++)
 				_puts(my_env[i]);
-			argv[0] = NULL;
+			argv[0] = NULL;*/
+			env_builtin(argv);
 			return (1);
 		}
-		if ((_strcmp(argv[0], "env") == 0) && argv[1] != NULL)
+		/*if ((_strcmp(argv[0], "env") == 0) && argv[1] != NULL)
 		{
 			for (i = 1 ; argv[i] != '\0' ; i++)
 				_strcpy(argv[i - 1], argv[i]);
 			argv[i - 1] = NULL;
 			return (1);
-		}
-		/*cd_builtin(argv);*/
+		}*/
 		if ((_strcmp(argv[0], "setenv") == 0) && argv[1] != NULL && argv[2] != NULL)
 		{
 			_setenv(argv[1] , argv[2] , 1);
 			argv[0] = NULL;
 			return (1);
 		}
-
 	}
 	return (1);
 }

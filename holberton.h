@@ -33,6 +33,8 @@ int _atoi(char *s);
 void free_grid(char **grid);
 char **array_copy(char **arr, int extra);
 int _setenv(char *name, char *value, int overwrite);
+void env_builtin(char **argv);
+int replace_env_val(char *name, char *value, int pos);
 
 
 #endif
