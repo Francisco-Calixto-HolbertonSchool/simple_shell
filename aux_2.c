@@ -94,13 +94,18 @@ int add_env_val(char *name, char *value, int pos, char **env, char ***envi)
  * @eof: end of file
  * Return: -1 if ctrl d was pressed 1 if not
  */
-int ctrl_d(int eof)
+int ctrl_d(int eof, int f)
 {
 	if (eof == EOF)
 	{
-		_putchar('\n');
-		fflush(STDIN_FILENO);
-		return (0);
+		if (f == 1)
+		{
+			_putchar('\n');
+			fflush(STDIN_FILENO);
+			return (0);
+		}
+		else
+			return (0);
 	}
 	return (1);
 }

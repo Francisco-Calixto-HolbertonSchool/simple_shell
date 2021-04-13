@@ -52,7 +52,7 @@ int built_ins(char **argv, char *line, char **env, char ***envi)
  */
 
 void free_everything(char *line, char **argv, char **env)
-{
+{	
 	free_grid(env);
 	free(line);
 	line = NULL;
@@ -91,29 +91,31 @@ int interactive(size_t f)
 
 /**
  * main - Entry point
+ * @argc: arg count
+ * @argv: arg vector
  * description: main
  * Return: 0
  */
 
-int main(void)
+int main(int argc __attribute__((unused)), char **argv)
 {
 	pid_t child = 100;
 	int eof = 0, status = 0;
 	size_t len = 0, f = 1;
-	char **argv = NULL, **my_envi;
+	char **args = NULL, **my_envi;
 	char *line = NULL;
 
 	my_envi = array_copy(environ, 0);
-	while (f == 1)
+	while (1 == 1)
 	{
 		f = interactive(f);
 		signal(SIGINT, sig_handler);
 		eof = getline(&line, &len, stdin);
-		if (ctrl_d(eof) == 0)
+		if (ctrl_d(eof, f) == 0)
 			break;
-		free(argv);
-		argv = parser(line);
-		if ((built_ins(argv, line, my_envi, &my_envi)) == 0)
+		free(args);
+		args = parser(line);
+		if ((built_ins(args, line, my_envi, &my_envi)) == 0)
 		{
 			fflush(STDIN_FILENO);
 			break;
@@ -121,20 +123,20 @@ int main(void)
 		child = fork();
 		if (child == -1)
 		{
-			free_everything(line, argv, my_envi);
+			free_everything(line, args, my_envi);
 			return (1);
 		}
 		if (child == 0)
 		{
-			if (argv[0])
-				if (execve(_which(argv[0], my_envi), argv, NULL) == -1)
-					perror("./hsh");
+			if (args[0])
+				if (execve(_which(args[0], my_envi), args, NULL) == -1)
+					perror(argv[0]);
 			break;
 		}
 		else
 			wait(&status);
 		fflush(STDIN_FILENO);
 	}
-	free_everything(line, argv, my_envi);
+	free_everything(line, args, my_envi);
 	return (0);
 }

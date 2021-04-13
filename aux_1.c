@@ -30,18 +30,33 @@ void free_grid(char **grid)
 
 char *_which(char *cmd, char **env)
 {
-	int i = 0;
+	int i = 0, size = 0;
 	struct stat st;
-	static char buff[1024];
+	char *buff;
 	char **path = NULL;
 
 	path = findpath(env);
 	for (i = 1; path[i]; i++)
 	{
 		if (cmd[0] == '.')
+		{
+			buff = malloc(sizeof(*cmd));
+			if (!buff)
+			{
+				free(path);
+				return NULL;
+			}
 			_strcpy(buff, cmd);
+		}
 		else
 		{
+			size = (_strlen(path[i]) + 2 + _strlen(cmd));
+			buff = malloc(sizeof(char) * size);
+			if (!buff)
+			{
+				free(path);
+				return NULL;
+			}
 			_strcpy(buff, path[i]);
 			_strcat(buff, "/");
 			_strcat(buff, cmd);

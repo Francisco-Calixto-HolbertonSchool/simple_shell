@@ -13,12 +13,12 @@
 extern char **environ;
 
 /*protoypes*/
-int ctrl_d(int eof);
+int ctrl_d(int eof, int f);
 char **parser(char *str);
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
 int _putchar(char c);
-void free_array(char **argv);
+/*void free_array(char **argv);*/
 size_t _strcspn(char *s, char par);
 char *_getenv(const char *name, char **env);
 char **findpath(char **env);

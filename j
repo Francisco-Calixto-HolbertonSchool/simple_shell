@@ -2,13 +2,13 @@
 #
 # run /bin/ls many times, with a lot of spaces everywhere
 
-command="ls"
+command="pwd"
 
 OLDPATH="$PATH"
-PATH=":$PATH"
+PATH=""
 #$ECHO "env" 
 
-$ECHO "$command" | ./hsh
+echo "$command" | ./hsh
 
 # put PATH back
 PATH="$OLDPATH"
