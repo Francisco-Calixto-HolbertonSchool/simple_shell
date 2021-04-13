@@ -2,13 +2,16 @@
 #
 # run /bin/ls many times, with a lot of spaces everywhere
 
-command="pwd"
+command="ls
+ls --color=auto -a
+pwd
+le"
 
 OLDPATH="$PATH"
-PATH=""
+PATH="$PATH"
 #$ECHO "env" 
 
-echo "$command" | ./hsh
+echo "$command" | valgrind ./hsh
 
 # put PATH back
 PATH="$OLDPATH"

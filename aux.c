@@ -55,6 +55,8 @@ char **parser(char *str)
 	str = special_char_finder(str, "#");
 	sep = count_sep(str, ' ');
 	res = malloc(sizeof(char *) * (sep + 2));
+	if (!res)
+		return (NULL);
 	word = strtok(str, " \n");
 	while (word)
 	{

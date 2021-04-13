@@ -52,7 +52,7 @@ int built_ins(char **argv, char *line, char **env, char ***envi)
  */
 
 void free_everything(char *line, char **argv, char **env)
-{	
+{
 	free_grid(env);
 	free(line);
 	line = NULL;
@@ -100,13 +100,13 @@ int interactive(size_t f)
 int main(int argc __attribute__((unused)), char **argv)
 {
 	pid_t child = 100;
-	int eof = 0, status = 0;
+	int eof = 0, status = 0, pichu = 0;
 	size_t len = 0, f = 1;
 	char **args = NULL, **my_envi;
 	char *line = NULL;
 
 	my_envi = array_copy(environ, 0);
-	while (1 == 1)
+	for (pichu = 1; ; pichu++)
 	{
 		f = interactive(f);
 		signal(SIGINT, sig_handler);
@@ -128,9 +128,7 @@ int main(int argc __attribute__((unused)), char **argv)
 		}
 		if (child == 0)
 		{
-			if (args[0])
-				if (execve(_which(args[0], my_envi), args, NULL) == -1)
-					perror(argv[0]);
+			exec_aux(args, my_envi, argv, pichu);
 			break;
 		}
 		else

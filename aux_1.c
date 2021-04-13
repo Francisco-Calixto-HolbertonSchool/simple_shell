@@ -30,42 +30,27 @@ void free_grid(char **grid)
 
 char *_which(char *cmd, char **env)
 {
-	int i = 0, size = 0;
+	int i = 0;
+	char **path = NULL;
 	struct stat st;
 	char *buff;
-	char **path = NULL;
 
 	path = findpath(env);
 	for (i = 1; path[i]; i++)
 	{
-		if (cmd[0] == '.')
-		{
-			buff = malloc(sizeof(*cmd));
-			if (!buff)
-			{
-				free(path);
-				return NULL;
-			}
-			_strcpy(buff, cmd);
-		}
-		else
-		{
-			size = (_strlen(path[i]) + 2 + _strlen(cmd));
-			buff = malloc(sizeof(char) * size);
-			if (!buff)
-			{
-				free(path);
-				return NULL;
-			}
-			_strcpy(buff, path[i]);
-			_strcat(buff, "/");
-			_strcat(buff, cmd);
-		}
+		buff = _which_aux(path, cmd, i);
 		if (stat(buff, &st) == 0)
 		{
 			free(path);
 			return (buff);
 		}
+		else
+			free(buff);
+	}
+	if (!path[i] && cmd[0] != '.' && cmd[0] != '/')
+	{
+		free(path);
+		return ("notfound");
 	}
 	free(path);
 	return (cmd);
@@ -108,10 +93,14 @@ char **array_copy(char **arr, int extra)
 	{
 	}
 	new_arr = malloc(sizeof(char *) * (i + extra + 1));
+	if (!new_arr)
+		return (NULL);
 	for (i = 0 ; arr[i] != '\0' ; i++)
 	{
 		len = _strlen(arr[i]);
 		new_arr[i] = malloc(sizeof(char) * (len + 1));
+		if (!new_arr[i])
+			free_grid(new_arr);
 		_strcpy(new_arr[i], arr[i]);
 		new_arr[i][len] = '\0';
 	}

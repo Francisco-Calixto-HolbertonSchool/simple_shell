@@ -92,6 +92,7 @@ int add_env_val(char *name, char *value, int pos, char **env, char ***envi)
 /**
  * ctrl_d - entry point
  * @eof: end of file
+ * @f: flag
  * Return: -1 if ctrl d was pressed 1 if not
  */
 int ctrl_d(int eof, int f)
@@ -108,4 +109,46 @@ int ctrl_d(int eof, int f)
 			return (0);
 	}
 	return (1);
+}
+/**
+* exec_aux - Entry point
+* @args: arguments for execution
+* @my_envi: enviroment array
+* @argv: arguments of the shell execution
+* @times: times the shell do a cycle
+*
+* Description: Makes de logic to execute or not an command
+* Return: Nothing
+*/
+void exec_aux(char **args, char **my_envi, char **argv, int times)
+{
+	char *cmd;
+	char *error;
+	char pichu[8];
+	int size = 0;
+
+	if (args[0])
+	{
+		cmd = _which(args[0], my_envi);
+		if (_strcmp(cmd, "notfound") == 0)
+		{
+			size = (_strlen(argv[0]) + _strlen(args[0]) + 22);
+			error = malloc(sizeof(char) * size);
+			if (!error)
+				return;
+			_itoa(times, pichu);
+			_strcpy(error, argv[0]);
+			_strcat(error, ": ");
+			_strcat(error, pichu);
+			_strcat(error, ": ");
+			_strcat(error, args[0]);
+			_strcat(error, ": not found");
+			_puts(error);
+			free(error);
+		}
+		else
+			if (execve(cmd, args, my_envi) == -1)
+				perror(argv[0]);
+	}
+
 }

@@ -36,5 +36,8 @@ int _setenv(char *name, char *value, int overwrite, char **env, char ***envi);
 void env_builtin(char **argv, char **env);
 int replace_env_val(char *name, char *value, int pos, char **env);
 int add_env_val(char *name, char *value, int pos, char **env, char ***envi);
+void exec_aux(char **args, char **my_envi, char **argv, int times);
+char *_which_aux(char **path, char *cmd, int i);
+int _itoa(int value, char *ptr);
 
 #endif
