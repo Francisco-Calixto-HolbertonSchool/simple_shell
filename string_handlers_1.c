@@ -78,13 +78,12 @@ int _atoi(char *s)
 	return (n);
 }
 /**
-* _itoa - Entry point
-* @value: integer to convert
-* @ptr: place to put the integer converted
-*
-* Description: converts an integer to a string
-* Returns: Size of the number
-*/
+ * _itoa - Entry point
+ * @value: integer to convert
+ * @ptr: place to put the integer converted
+ * Description: converts an integer to a string
+ * Return: Size of the number
+ */
 int _itoa(int value, char *ptr)
 {
 	int count = 0, temp;
