@@ -1,17 +1,39 @@
 .\"Man page for Kiko's and Diego's shell project.
-.TH man 3 "13 April 2021" "1.0" "simple shell man page"
+.TH man 1 "13 April 2021" "1.0" "simple shell man page"
 .SH NAME
 .B hsh - Holberton Shell
 .SH SYNOPSIS
 hsh [command] [command options]
+.PP 
+#include "holberton.h"
 .SH DESCRIPTION
 .B hsh is a command interpreter that executes commands passed from a command line string, the standard input or an specific file. It is originally designed to be a prototype copy of the standard UNIX command language interpreter sh.
-.SH ENVIRONMENT VARIABLES
+.SH EXECUTION
+The interactive mode, as defined by isatty(3), can be executed by calling the absolute or relative path of the executable.
+.PP 
+The non interactive mode can be used without entering the hsh program, by redirecting the output from another command such as 'echo' or an specified file. 
+E.g. echo "ls" | ./hsh
+.SH COMMAND SEARCHING
+.B hsh searches for the argument 0 of the string passed to it which was captured by the getline function (see man 3 getline). It first searches for matching built-ins, then fr executables with the command name in the current directory, lastly it searches for the command in the PATH. If none of these options are true, the argument can only be the full path of a command or an invalid command.
+.SH ARGUMENT HANDLING
+.B Just like sh, hsh handles command arguments by passing a the entire tokenized (man 3 strtok) command line to the execve function (man 2 execve).
+.SH COMMENTS
+.B The inclusion of a '#' character causes the reamining of the command line to be ignor\
+ed.
+.SH BUILT-INS
+.B cd:  hsh currently handles the cd builtin that moves directories by updating environment variables. cd alone works the same way as cd $HOME would, cd - and cd.. both work accordinly
 .PP
-.B ENV :   
+.B exit: If implemented, the exit built in must be alone or followed by and status value.
+.PP
+.B env: prints the current environment.
+.PP
+.B setenv:  sets a new environment variable.
+.SH CTRL + D
+.B Sends signal (man 3 signal) and terminates the process.
+.SH CTRL + C
+.B As of in sh, ctrl + c is ignored in hsh, and has no efect on terminating any process.
 .SH SEE ALSO
-man
-.B 3 printf
+Check out the github of this project <https://github.com/Francisco-Calixto-HolbertonSchool/simple_shell.git> for deeper information.
 .SH BUGS
 No known bugs.
 .SH AUTHOR
