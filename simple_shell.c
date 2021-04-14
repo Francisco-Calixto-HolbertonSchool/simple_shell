@@ -38,6 +38,7 @@ int built_ins(char **argv, char *line, char **env, char ***envi)
 			argv[0] = NULL;
 			return (1);
 		}
+		cd_builtin(argv, env, envi);
 	}
 	return (1);
 }
