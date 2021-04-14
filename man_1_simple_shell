@@ -4,8 +4,6 @@
 .B hsh - Holberton Shell
 .SH SYNOPSIS
 hsh [command] [command options]
-.PP 
-#include "holberton.h"
 .SH DESCRIPTION
 .B hsh is a command interpreter that executes commands passed from a command line string, the standard input or an specific file. It is originally designed to be a prototype copy of the standard UNIX command language interpreter sh.
 .SH EXECUTION
