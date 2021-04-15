@@ -30,6 +30,8 @@ It´s inspired in other shells like bash or sh but not with the best optimizatio
  - `cd [path]` change working directory to path (absolute or relative).
  - `cd -` change working directory to the previous one.
  - `cd` change working directory to $HOME directory.
+ - `setenv [name] [value]` add a enviroment variable.
+ - `help [built-in]` Shows all built-ins and explanations for each one. 
 
 # Files
 
