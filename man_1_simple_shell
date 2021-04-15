@@ -1,5 +1,5 @@
 .\"Man page for Kiko's and Diego's shell project.
-.TH man 1 "13 April 2021" "1.0" "simple shell man page"
+.TH man 1 hsh "13 April 2021" "1.0" "simple shell man page"
 .SH NAME
 .B hsh - Holberton Shell
 .SH SYNOPSIS
@@ -12,7 +12,7 @@ The interactive mode, as defined by isatty(3), can be executed by calling the ab
 The non interactive mode can be used without entering the hsh program, by redirecting the output from another command such as 'echo' or an specified file. 
 E.g. echo "ls" | ./hsh
 .SH COMMAND SEARCHING
-.B hsh searches for the argument 0 of the string passed to it which was captured by the getline function (see man 3 getline). It first searches for matching built-ins, then fr executables with the command name in the current directory, lastly it searches for the command in the PATH. If none of these options are true, the argument can only be the full path of a command or an invalid command.
+.B hsh searches for the argument 0 of the string passed to it which was captured by the getline function (see man 3 getline). It first searches for matching built-ins, then for executables with the command name in the current directory, lastly it searches for the command in the PATH. If none of these options are true, the argument can only be the full path of a command or an invalid command.
 .SH ARGUMENT HANDLING
 .B Just like sh, hsh handles command arguments by passing a the entire tokenized (man 3 strtok) command line to the execve function (man 2 execve).
 .SH COMMENTS
