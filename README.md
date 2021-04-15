@@ -38,7 +38,8 @@ It´s inspired in other shells like bash or sh but not with the best optimizatio
  - aux_1.c : File containing more auxiliary functions like _which.
  - aux_2.c : File containing more auxiliary functions like replace_env_val or add_env_val.
  - aux_3.c : File containing more auxiliary functions like _which_aux.
- - cd.c : File containing all the code to built-in cd.
+ - cd.c : File containing all the code for built-in cd.
+ - help.c : File containing all code for built-in help.
  - holberton.h : Header file.
  - hsh : Executable file of the shell (precompiled).
  - man_1_simple_shell : Man file for this shell.
