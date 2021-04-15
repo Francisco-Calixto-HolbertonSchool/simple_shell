@@ -40,3 +40,27 @@ char *_which_aux(char **path, char *cmd, int i)
 
 	return (cmd);
 }
+
+/**
+* parent_wait - Entry point
+* @child_pid: pid of child process
+* @status: status int
+*
+* Descrption: Wait for child procces and catch exit status
+* (Thanks Tommy and Hernan <3)
+* Return: Exit status code
+*/
+int parent_wait(int child_pid, int *status)
+{
+	if (waitpid(child_pid, status, 0) == -1)
+	{
+		perror("Waitpid failed");
+		return (0);
+	}
+	if (WIFEXITED(*status))
+	{
+		return (WEXITSTATUS(*status));
+	}
+
+	return (1);
+}

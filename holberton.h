@@ -40,5 +40,6 @@ void exec_aux(char **args, char **my_envi, char **argv, int times);
 char *_which_aux(char **path, char *cmd, int i);
 int _itoa(int value, char *ptr);
 void cd_builtin(char **argv, char **env, char ***envi);
+int parent_wait(int child_pid, int *status);
 
 #endif

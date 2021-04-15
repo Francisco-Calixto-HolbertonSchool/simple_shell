@@ -101,7 +101,7 @@ int interactive(size_t f)
 int main(int argc __attribute__((unused)), char **argv)
 {
 	pid_t child = 100;
-	int eof = 0, status = 0, pichu = 0;
+	int eof = 0, status = 0, pichu = 0, exit_val = 0;
 	size_t len = 0, f = 1;
 	char **args = NULL, **my_envi;
 	char *line = NULL;
@@ -133,9 +133,9 @@ int main(int argc __attribute__((unused)), char **argv)
 			break;
 		}
 		else
-			wait(&status);
+			exit_val = parent_wait(child, &status);
 		fflush(STDIN_FILENO);
 	}
 	free_everything(line, args, my_envi);
-	return (0);
+	return (exit_val);
 }
