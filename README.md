@@ -21,6 +21,7 @@ It´s inspired in other shells like bash or sh but not with the best optimizatio
  - Support built-in function exit with and without an status.
  - Handle the Ctrl + C condition to not kill the shell.
  - Support built-in function cd (only interactive mode).
+ - Support built-in function help.
 
 ## Built-in Functions
 
