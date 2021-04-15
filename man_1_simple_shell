@@ -23,6 +23,8 @@ ed.
 .PP
 .B exit: If implemented, the exit built in must be alone or followed by and status value.
 .PP
+.B help: Shows all built-ins and explain how to use it.
+.PP
 .B env: prints the current environment.
 .PP
 .B setenv:  sets a new environment variable.
